@@ -1,6 +1,6 @@
 package es.zed.shared.exceptions;
 
-import es.zed.common.service.exception.PokemonException;
+import es.zed.common.exception.PokemonException;
 import es.zed.shared.exceptions.enums.PokeApiExceptionType;
 
 /**

@@ -1,6 +1,6 @@
 package es.zed.infrastructure.api.endpoint;
 
-import es.zed.common.service.abstracts.AbstractEnpoint;
+import es.zed.common.abstracts.AbstractEnpoint;
 import es.zed.domain.output.PokeApiOutputPort;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.enums.StatusType;

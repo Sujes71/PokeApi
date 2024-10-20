@@ -1,6 +1,6 @@
 package es.zed.application;
 
-import es.zed.common.service.utils.CustomObjectMapper;
+import es.zed.common.utils.CustomObjectMapper;
 import es.zed.domain.intput.PokeApiInputPort;
 import es.zed.domain.output.PokeApiOutputPort;
 import es.zed.dto.response.PokemonResponseDto;

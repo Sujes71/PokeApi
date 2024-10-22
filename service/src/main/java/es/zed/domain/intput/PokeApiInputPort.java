@@ -11,8 +11,7 @@ public interface PokeApiInputPort {
    * Get pokemon.
    *
    * @param nid nid.
-   * @param auth auth.
    * @return pokemonResponseDto.
    */
-  PokemonResponseDto getPokemon(final String nid, final String auth);
+  PokemonResponseDto getPokemon(final String nid);
 }

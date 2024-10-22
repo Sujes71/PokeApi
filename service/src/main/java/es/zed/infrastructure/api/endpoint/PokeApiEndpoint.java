@@ -33,8 +33,8 @@ public class PokeApiEndpoint extends AbstractEnpoint implements PokeApiOutputPor
    * @return pokemonResponseDto.
    */
   @Override
-  public PokemonResponseDto doCallGetPokemon(final String url, final String auth) {
-    return doCall(url, HttpMethod.GET, addDefaultHeaders(auth), null, PokemonResponseDto.class);
+  public PokemonResponseDto doCallGetPokemon(final String url) {
+    return doCall(url, HttpMethod.GET, null, null, PokemonResponseDto.class);
   }
 
   /**

@@ -50,18 +50,17 @@ public class PokeApiService implements PokeApiInputPort {
    * Method to get the pokemon by id.
    *
    * @param nid nid.
-   * @param auth auth.
    * @return the pokemon.
    */
   @Override
-  public PokemonResponseDto getPokemon(final String nid, final String auth) {
+  public PokemonResponseDto getPokemon(final String nid) {
     Map<String, String> replacements = new HashMap<>();
     replacements.put(Constants.NID_URL_FILTER, nid);
     PokemonResponseDto pokemonResponseDto = pokeApiOutputPort.doCallGetPokemon(
         mapper.mapUrl(
             replacements,
             pokeApiBaseUrl.concat(Constants.POKE_API_POKEMON_NID)
-        ), auth
+        )
     );
     amqpController.publish(eventMapper.buildEvent(pokemonResponseDto));
     return pokemonResponseDto;

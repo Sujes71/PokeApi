@@ -28,12 +28,10 @@ public class PokeApiController {
    * Method to get the pokemon by id.
    *
    * @param nid nid.
-   * @param auth auth.
    * @return the pokemon.
    */
   @GetMapping(path = Constants.POKE_API_POKEMON_NID, produces = MediaType.APPLICATION_JSON_VALUE)
-  private PokemonResponseDto getPokemon(@PathVariable final String nid,
-      @RequestHeader(name = "Authorization") final String auth) {
-    return pokeApiInputPort.getPokemon(nid, auth);
+  private PokemonResponseDto getPokemon(@PathVariable final String nid) {
+    return pokeApiInputPort.getPokemon(nid);
   }
 }

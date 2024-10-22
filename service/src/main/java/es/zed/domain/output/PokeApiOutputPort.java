@@ -11,15 +11,16 @@ public interface PokeApiOutputPort {
    * Call pokemon api.
    *
    * @param url url.
+   * @param auth auth.
    * @return pokemonResponseDto.
    */
-  PokemonResponseDto doCallGetPokemon(final String url);
+  PokemonResponseDto doCallGetPokemon(final String url, final String auth);
 
   /**
    * Call post pokeDb.
    *
    * @param url url.
    */
-  public void doCallPostAbility(final String url);
+  void doCallPostAbility(final String url);
 
 }

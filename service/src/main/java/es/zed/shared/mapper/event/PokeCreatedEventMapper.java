@@ -1,10 +1,10 @@
 package es.zed.shared.mapper.event;
 
-import es.zed.common.utils.EventMapper;
-import es.zed.common.utils.UuidUtils;
 import es.zed.dto.response.PokemonResponseDto;
-import es.zed.event.pokeapi.PokeCreatedEvent;
-import es.zed.event.pokeapi.PokeCreatedEventBody;
+import es.zed.pokeapi.PokeCreatedEvent;
+import es.zed.pokeapi.PokeCreatedEventBody;
+import es.zed.utils.EventMapper;
+import es.zed.utils.UuidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

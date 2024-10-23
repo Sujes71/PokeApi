@@ -1,6 +1,6 @@
 package es.zed.shared.mapper.event;
 
-import es.zed.dto.response.PokemonResponseDto;
+import es.zed.dto.response.PokemonAbilityResponseDto;
 import es.zed.pokeapi.PokeCreatedEvent;
 import es.zed.pokeapi.PokeCreatedEventBody;
 import es.zed.utils.EventMapper;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @RequiredArgsConstructor
 @Component
-public class PokeCreatedEventMapper implements EventMapper<PokemonResponseDto, PokeCreatedEvent> {
+public class PokeCreatedEventMapper implements EventMapper<PokemonAbilityResponseDto, PokeCreatedEvent> {
 
   /**
    * Poke created event.
@@ -22,7 +22,7 @@ public class PokeCreatedEventMapper implements EventMapper<PokemonResponseDto, P
    * @return event.
    */
   @Override
-  public PokeCreatedEvent buildEvent(PokemonResponseDto object) {
+  public PokeCreatedEvent buildEvent(PokemonAbilityResponseDto object) {
     return PokeCreatedEvent.builder()
         .pokemonId(object.getId())
         .creationTs(System.currentTimeMillis())

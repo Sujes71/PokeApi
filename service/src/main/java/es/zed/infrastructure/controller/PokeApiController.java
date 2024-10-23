@@ -1,8 +1,10 @@
 package es.zed.infrastructure.controller;
 
 import es.zed.domain.intput.PokeApiInputPort;
+import es.zed.dto.response.PokemonAbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.respmodel.ReqRespModel;
+import es.zed.security.PokeAuthentication;
 import es.zed.shared.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -32,7 +34,18 @@ public class PokeApiController {
    * @return the pokemon.
    */
   @GetMapping(path = Constants.POKE_API_POKEMON_NID, produces = MediaType.APPLICATION_JSON_VALUE)
-  private ResponseEntity<ReqRespModel<PokemonResponseDto>> getPokemon(@PathVariable final String nid) {
+  private ResponseEntity<ReqRespModel<PokemonAbilityResponseDto>> getPokemon(@PathVariable final String nid) {
     return pokeApiInputPort.getPokemon(nid);
+  }
+
+  /**
+   * Method to get the pokemon by id.
+   *
+   * @param auth auth.
+   * @return the pokemon.
+   */
+  @GetMapping(path = Constants.POKE_API_POKEMON, produces = MediaType.APPLICATION_JSON_VALUE)
+  private ResponseEntity<ReqRespModel<PokemonResponseDto>> getAllPokemon(final PokeAuthentication auth) {
+    return pokeApiInputPort.getAllPokemon(auth);
   }
 }

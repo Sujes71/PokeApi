@@ -4,6 +4,7 @@ import es.zed.domain.intput.PokeApiInputPort;
 import es.zed.domain.output.PokeApiOutputPort;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.infrastructure.controller.AmqpController;
+import es.zed.respmodel.ReqRespModel;
 import es.zed.shared.mapper.event.PokeCreatedEventMapper;
 import es.zed.shared.utils.Constants;
 import es.zed.utils.CustomObjectMapper;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -53,9 +55,10 @@ public class PokeApiService implements PokeApiInputPort {
    * @return the pokemon.
    */
   @Override
-  public PokemonResponseDto getPokemon(final String nid) {
+  public ResponseEntity<ReqRespModel<PokemonResponseDto>> getPokemon(final String nid) {
     Map<String, String> replacements = new HashMap<>();
     replacements.put(Constants.NID_URL_FILTER, nid);
+
     PokemonResponseDto pokemonResponseDto = pokeApiOutputPort.doCallGetPokemon(
         mapper.mapUrl(
             replacements,
@@ -63,6 +66,8 @@ public class PokeApiService implements PokeApiInputPort {
         )
     );
     amqpController.publish(eventMapper.buildEvent(pokemonResponseDto));
-    return pokemonResponseDto;
+
+    return ResponseEntity.ok(new ReqRespModel<>(pokemonResponseDto, "Success"));
   }
+
 }

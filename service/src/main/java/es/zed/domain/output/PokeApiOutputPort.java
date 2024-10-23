@@ -15,11 +15,4 @@ public interface PokeApiOutputPort {
    */
   PokemonResponseDto doCallGetPokemon(final String url);
 
-  /**
-   * Call post pokeDb.
-   *
-   * @param url url.
-   */
-  void doCallPostAbility(final String url);
-
 }

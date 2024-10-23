@@ -2,9 +2,11 @@ package es.zed.infrastructure.controller;
 
 import es.zed.domain.intput.PokeApiInputPort;
 import es.zed.dto.response.PokemonResponseDto;
+import es.zed.respmodel.ReqRespModel;
 import es.zed.shared.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,7 @@ public class PokeApiController {
    * @return the pokemon.
    */
   @GetMapping(path = Constants.POKE_API_POKEMON_NID, produces = MediaType.APPLICATION_JSON_VALUE)
-  private PokemonResponseDto getPokemon(@PathVariable final String nid) {
+  private ResponseEntity<ReqRespModel<PokemonResponseDto>> getPokemon(@PathVariable final String nid) {
     return pokeApiInputPort.getPokemon(nid);
   }
 }

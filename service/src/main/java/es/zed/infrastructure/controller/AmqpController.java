@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class AmqpController extends AbstractAmqpController<AbstractEvent<?>> {
 
+  /**
+   * Constructor.
+   *
+   * @param requestTemplate template.
+   * @param producerExchangeName producer.
+   */
   public AmqpController(RabbitTemplate requestTemplate, @Value("${producer.exchange.name}") String producerExchangeName) {
     super(requestTemplate, producerExchangeName);
   }

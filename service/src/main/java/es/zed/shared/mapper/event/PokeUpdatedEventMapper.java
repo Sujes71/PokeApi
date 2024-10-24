@@ -7,9 +7,18 @@ import es.zed.utils.EventMapper;
 import es.zed.utils.UuidUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * Poke updated event mapper.
+ */
 @Component
 public class PokeUpdatedEventMapper implements EventMapper<PokemonAbilityResponseDto, PokeUpdatedEvent> {
 
+  /**
+   * Build event.
+   *
+   * @param object object.
+   * @return poke updated event.
+   */
   @Override
   public PokeUpdatedEvent buildEvent(PokemonAbilityResponseDto object) {
     return PokeUpdatedEvent.builder()

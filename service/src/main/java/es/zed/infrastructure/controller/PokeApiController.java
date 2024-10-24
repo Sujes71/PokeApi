@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +37,18 @@ public class PokeApiController {
   @GetMapping(path = Constants.POKE_API_POKEMON_NID, produces = MediaType.APPLICATION_JSON_VALUE)
   private ResponseEntity<ReqRespModel<PokemonAbilityResponseDto>> getPokemon(@PathVariable final String nid) {
     return pokeApiInputPort.getPokemon(nid);
+  }
+
+  /**
+   * Method to get the pokemon by id.
+   *
+   * @param nid nid.
+   * @param name name.
+   * @return the pokemon.
+   */
+  @PutMapping(path = Constants.POKE_API_POKEMON_ID_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
+  private ResponseEntity<ReqRespModel<Void>> updatePokemon(@PathVariable final String nid, @PathVariable final String name) {
+    return pokeApiInputPort.updatePokemon(nid, name);
   }
 
   /**

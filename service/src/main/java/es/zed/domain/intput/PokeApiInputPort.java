@@ -20,6 +20,15 @@ public interface PokeApiInputPort {
   ResponseEntity<ReqRespModel<PokemonAbilityResponseDto>> getPokemon(final String nid);
 
   /**
+   * Update pokemon.
+   *
+   * @param nid nid.
+   * @param name name.
+   * @return void.
+   */
+  ResponseEntity<ReqRespModel<Void>> updatePokemon(final String nid, final String name);
+
+  /**
    * Get pokemon.
    *
    * @param auth auth.

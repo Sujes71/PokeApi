@@ -5,10 +5,13 @@ import es.zed.domain.output.PokeApiOutputPort;
 import es.zed.dto.response.PokemonAbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.infrastructure.controller.AmqpController;
+import es.zed.infrastructure.controller.KafkaController;
+import es.zed.pokeapi.PokeCreatedEvent;
 import es.zed.respmodel.ReqRespModel;
 import es.zed.security.JwtService;
 import es.zed.security.PokeAuthentication;
 import es.zed.shared.mapper.event.PokeCreatedEventMapper;
+import es.zed.shared.mapper.event.PokeUpdatedEventMapper;
 import es.zed.shared.utils.Constants;
 import es.zed.utils.CustomObjectMapper;
 import java.util.HashMap;
@@ -16,6 +19,7 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
@@ -55,12 +59,22 @@ public class PokeApiService implements PokeApiInputPort {
   /**
    * PokeApi event mapper.
    */
-  private final PokeCreatedEventMapper eventMapper;
+  private final PokeCreatedEventMapper pokeCreatedEventMapper;
+
+  /**
+   * PokeApi event mapper.
+   */
+  private final PokeUpdatedEventMapper pokeUpdatedEventMapper;
 
   /**
    * Jwt service.
    */
   private final JwtService jwtService;
+
+  /**
+   * Kafka controller.
+   */
+  private final KafkaController kafkaController;
 
   /**
    * Method to get the pokemon by id.
@@ -79,9 +93,34 @@ public class PokeApiService implements PokeApiInputPort {
             pokeApiBaseUrl.concat(Constants.POKE_API_POKEMON_NID)
         )
     );
-    amqpController.publish(eventMapper.buildEvent(pokemonResponseDto));
+    PokeCreatedEvent event = pokeCreatedEventMapper.buildEvent(pokemonResponseDto);
+    amqpController.publish(event);
 
-    return ResponseEntity.ok(new ReqRespModel<>(pokemonResponseDto, "Success"));
+    return ResponseEntity.ok(new ReqRespModel<>(pokemonResponseDto, Constants.RESPONSE_SUCCESS));
+  }
+
+  /**
+   * Update pokemon.
+   *
+   * @param nid nid.
+   * @param name name.
+   * @return void.
+   */
+  @Override
+  public ResponseEntity<ReqRespModel<Void>> updatePokemon(final String nid, final String name) {
+    Map<String, String> replacements = new HashMap<>();
+    replacements.put(Constants.NID_URL_FILTER, nid);
+
+    PokemonAbilityResponseDto pokemonResponseDto = pokeApiOutputPort.doCallGetPokemon(
+        mapper.mapUrl(
+            replacements,
+            pokeApiBaseUrl.concat(Constants.POKE_API_POKEMON_NID)
+        )
+    );
+    pokemonResponseDto.setName(name);
+    kafkaController.publish(pokeUpdatedEventMapper.buildEvent(pokemonResponseDto));
+
+    return ResponseEntity.ok(new ReqRespModel<>(null, Constants.RESPONSE_SUCCESS));
   }
 
   /**
@@ -90,12 +129,13 @@ public class PokeApiService implements PokeApiInputPort {
    * @param auth auth.
    * @return all pokemon.
    */
+  @PreAuthorize(Constants.API_AUTHORITIES)
   @Override
   public ResponseEntity<ReqRespModel<PokemonResponseDto>> getAllPokemon(PokeAuthentication auth) {
     PokemonResponseDto pokemonsResponseDto =
         pokeApiOutputPort.doCallInternalGetPokemon(pokeDbBaseUrl.concat(Constants.POKE_API_POKEMON),
             jwtService.createJwtFromSpec(auth.getJwtBearerToken()));
-    return ResponseEntity.ok(new ReqRespModel<>(pokemonsResponseDto, "Success"));
+    return ResponseEntity.ok(new ReqRespModel<>(pokemonsResponseDto, Constants.RESPONSE_SUCCESS));
   }
 
 }

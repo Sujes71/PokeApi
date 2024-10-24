@@ -41,6 +41,11 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
+      <groupId>es.zed</groupId>
+      <artifactId>microservice-kafka-config</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>

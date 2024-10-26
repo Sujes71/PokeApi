@@ -36,7 +36,7 @@ public class PokeApiController {
    */
   @GetMapping(path = Constants.POKE_API_POKEMON_NID, produces = MediaType.APPLICATION_JSON_VALUE)
   private ResponseEntity<ReqRespModel<PokemonAbilityResponseDto>> getPokemon(@PathVariable final String nid) {
-    return pokeApiInputPort.getPokemon(nid);
+    return ResponseEntity.ok(new ReqRespModel<>(pokeApiInputPort.getPokemon(nid), Constants.RESPONSE_SUCCESS));
   }
 
   /**
@@ -48,7 +48,8 @@ public class PokeApiController {
    */
   @PutMapping(path = Constants.POKE_API_POKEMON_ID_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
   private ResponseEntity<ReqRespModel<Void>> updatePokemon(@PathVariable final String nid, @PathVariable final String name) {
-    return pokeApiInputPort.updatePokemon(nid, name);
+    pokeApiInputPort.updatePokemon(nid, name);
+    return ResponseEntity.ok(new ReqRespModel<>(null, "Success"));
   }
 
   /**
@@ -59,6 +60,6 @@ public class PokeApiController {
    */
   @GetMapping(path = Constants.POKE_API_POKEMON, produces = MediaType.APPLICATION_JSON_VALUE)
   private ResponseEntity<ReqRespModel<PokemonResponseDto>> getAllPokemon(final PokeAuthentication auth) {
-    return pokeApiInputPort.getAllPokemon(auth);
+    return ResponseEntity.ok(new ReqRespModel<>(pokeApiInputPort.getAllPokemon(auth), Constants.RESPONSE_SUCCESS));
   }
 }

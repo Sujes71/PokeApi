@@ -39,4 +39,20 @@ public class Constants {
    * Response success.
    */
   public static final String RESPONSE_SUCCESS = "Success";
+
+  /**
+   * All db pokemon cache.
+   */
+  public static final String ALL_DB_POKEMON_CACHE = "'AllDbPokemon'";
+
+  /**
+   * Poke cache.
+   */
+  public static final String POKE_CACHE = "PokeCache";
+
+  /**
+   * PK nid caches.
+   */
+  public static final String PK_NID_CACHE = "'Pk' + #nid";
+
 }

@@ -22,11 +22,9 @@ public class PokeUpdatedEventMapper implements EventMapper<PokemonAbilityRespons
   @Override
   public PokeUpdatedEvent buildEvent(PokemonAbilityResponseDto object) {
     return PokeUpdatedEvent.builder()
-        .pokemonId(object.getId())
         .creationTs(System.currentTimeMillis())
         .typeId(PokeUpdatedEvent.TYPE_ID)
         .messageId(UuidUtils.newUuid())
-        .origin(PokeUpdatedEvent.CONTEXT)
         .body(PokeUpdatedEventBody.builder()
             .id(object.getId())
             .name(object.getName())

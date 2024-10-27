@@ -24,11 +24,9 @@ public class PokeCreatedEventMapper implements EventMapper<PokemonAbilityRespons
   @Override
   public PokeCreatedEvent buildEvent(PokemonAbilityResponseDto object) {
     return PokeCreatedEvent.builder()
-        .pokemonId(object.getId())
         .creationTs(System.currentTimeMillis())
         .typeId(PokeCreatedEvent.TYPE_ID)
         .messageId(UuidUtils.newUuid())
-        .origin(PokeCreatedEvent.CONTEXT)
         .body(PokeCreatedEventBody.builder()
             .id(object.getId())
             .name(object.getName())

@@ -64,6 +64,7 @@ class PokeApiTest {
   private static final String NID = "123";
   private static final String CALL_URL = "https://pokeapi.co/api/v2/pokemon/{nid}";
   private static final String EXPECTED_URL = "https://pokeapi.co/api/v2/pokemon/" + NID;
+
   private PokemonAbilityResponseDto mockResponse;
   private PokeCreatedEvent mockPokeCreatedEvent;
   private PokeUpdatedEvent mockPokeUpdatedEvent;
